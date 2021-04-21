@@ -1,10 +1,10 @@
-// const io = require("socket.io")( {
-//     cors: {
-//       origin: "*",
-//     }
-//   });
+const io = require("socket.io")( {
+    cors: {
+      origin: "*",
+    }
+  });
 
-const io = require("socket.io");
+// const io = require("socket.io");
 
 const { createGameState, gameLoop, getUpdatedVelocity, initGame } = require('./game');
 const { FRAME_RATE } = require('./constants');
