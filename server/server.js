@@ -15,6 +15,7 @@ const clientRooms = {};
 
 io.on('connection', client => {
     client.on('keydown', handleKeydown);
+    client.on('swipe', handleSwipe);
     client.on('newGame', handleNewGame);
     client.on('joinGame', handleJoinGame);
 
@@ -73,25 +74,38 @@ io.on('connection', client => {
             return;
         }
 
-        const vel = getUpdatedVelocity(keyCode);
+        const vel = getUpdatedVelocity(keyCode, null);
 
         if (vel) {
             state[roomName].players[client.number - 1].vel = vel;
         }
     }
+
+    function handleSwipe(swipeDir) {
+        const roomName = clientRooms[client.id];
+        
+        if (!roomName) {
+            return;
+        }
+
+        const vel = getUpdatedVelocity(null, swipeDir);
+
+        if (vel) {
+            state[roomName].players[client.number - 1].vel = vel;
+        }        
+    }
+
 });
 
 function startGameInterval(roomName) {
     const intervalId = setInterval(() => {
         const winner = gameLoop(state[roomName]);
 
-        console.log("game loop console log" + gameLoop(state[roomName]));
         if(!winner) {
             emitGameState(roomName, state[roomName])
         } else {
             console.log(roomName);
             console.log(state[roomName]);
-            emitGameOver(roomName, winner)
             state[roomName] = null;
             clearInterval(intervalId);
         }

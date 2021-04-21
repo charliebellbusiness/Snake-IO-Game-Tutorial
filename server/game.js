@@ -154,7 +154,10 @@ function randomFood(state) {
     state.food = food;
 }
 
-function getUpdatedVelocity(keyCode) {
+function getUpdatedVelocity(keyCode, swipeDir) {
+
+    // If player is using keyboard
+    if (!swipeDir) {
     switch (keyCode) {
         // 37, 38, 39, 40 = Left, Down, Right, Up
         case 37: { // left
@@ -170,4 +173,27 @@ function getUpdatedVelocity(keyCode) {
             return {x: 0, y: 1} ;
         }
     }
+}
+
+    // If player is using touch controls
+    if (!keyCode) {
+        switch (swipeDir) {
+            // 37, 38, 39, 40 = Left, Down, Right, Up
+            case "left": { // left
+            return {x: -1, y: 0}; 
+            }
+            case "down": { //down 
+            return {x: 0, y: -1};
+            }
+            case "right": { //right 
+                return {x: 1, y: 0} ;
+            }
+            case "up": { //up
+                return {x: 0, y: 1} ;
+            }
+        }
+    
+
+
+}
 }
