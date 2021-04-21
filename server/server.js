@@ -1,8 +1,10 @@
-const io = require("socket.io")( {
-    cors: {
-      origin: "localhost:3000",
-    }
-  });
+// const io = require("socket.io")( {
+//     cors: {
+//       origin: "*",
+//     }
+//   });
+
+const io = require("socket.io");
 
 const { createGameState, gameLoop, getUpdatedVelocity, initGame } = require('./game');
 const { FRAME_RATE } = require('./constants');
@@ -106,4 +108,4 @@ function emitGameOver(roomName, winner) {
         .emit('gameOver', JSON.stringify({ winner }));
 }
 
-io.listen(3000);
+io.listen(process.env.PORT || 3000);
