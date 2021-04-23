@@ -31,6 +31,7 @@ function createGameState() {
                 {x: 2, y: 10},
                 {x: 3, y: 10}
             ],
+            colour: ''
         }, 
         // Player 2
         {
@@ -46,8 +47,12 @@ function createGameState() {
                 {x: 20, y: 10},
                 {x: 19, y: 10},
                 {x: 18, y: 10}
-            ],}
+            ],
+        }
+
         ],
+
+        // Game settings
         food: {
         },
         gridsize: GRID_SIZE,

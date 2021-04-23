@@ -13,10 +13,10 @@
 <body>
     <section class="vh-100">
         <div class="container h-100">
-
             <div id="initialScreen" class="h-100">
+
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <h1>Multiplayer Snake</h1>
+                    <h1>Multiplayer Snake Game</h1>
                     <button
                       type="submit"
                       class="btn btn-success"
@@ -35,13 +35,24 @@
                     >
                       Join Game
                     </button>
+
+                    <p></p>
+                    <p></p>
+
+                    <div class="d-flex flex-column align-items-center justify-content-bottom">
+                      <p>Made using tutorials by Hungry Turtle Coding on Youtube</p>
+                    </div>
                 </div>
               </div>
-
+              
             <div id="gameScreen" class="h-100">
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <h1> Your game code is: <span id="gameCodeDisplay"></span> </h1>
-                    <canvas id="canvas" ></canvas>
+                    <h1 id="gameCodeHeader"> Your game code is: <span id="gameCodeDisplay"></span> </h1>
+                    <h1 id="playerColourHeader" style="display:none"> Your snake colour is: <div id="playerColourDisplay" style="height:1em;width:1em;display:inline-block;vertical-align:bottom;"></div></h1>
+                    <p></p>
+                    <canvas id="canvas"></canvas>
+                    <p></p>
+                    <h1 id="controlsHeader">Control your snake<h1 id="controlsDisplay"></h1></h1>
                 </div>
             </div>
 

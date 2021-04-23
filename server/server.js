@@ -6,7 +6,7 @@ const io = require("socket.io")( {
 
 // const io = require("socket.io");
 
-const { createGameState, gameLoop, getUpdatedVelocity, initGame } = require('./game');
+const { gameLoop, getUpdatedVelocity, initGame } = require('./game');
 const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./utils');
 
@@ -102,12 +102,9 @@ function startGameInterval(roomName) {
         const winner = gameLoop(state[roomName]);
 
         if(!winner) {
-            emitGameState(roomName, state[roomName])
+            emitGameState(roomName, state[roomName]);
         } else {
-            console.log(roomName);
-            console.log(state[roomName]);
-            state[roomName] = null;
-            clearInterval(intervalId);
+            emitGameOver(roomName, winner);
         }
     }, 1000 / FRAME_RATE);
 };
