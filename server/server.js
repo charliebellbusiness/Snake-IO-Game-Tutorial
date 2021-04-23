@@ -4,9 +4,7 @@ const io = require("socket.io")( {
     }
   });
 
-// const io = require("socket.io");
-
-const { createGameState, gameLoop, getUpdatedVelocity, initGame } = require('./game');
+const { gameLoop, getUpdatedVelocity, initGame } = require('./game');
 const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./utils');
 
@@ -14,6 +12,9 @@ const state = {};
 const clientRooms = {};
 
 io.on('connection', client => {
+
+     // CLIENT.ON CALLS REQUIRE NAMED FUNCTION CALL, INLINE FUNCTIONS BREAK SERVER.JS CODE FOR SOME REASON
+
     client.on('keydown', handleKeydown);
     client.on('swipe', handleSwipe);
     client.on('newGame', handleNewGame);
@@ -83,17 +84,22 @@ io.on('connection', client => {
 
     function handleSwipe(swipeDir) {
         console.log("handleSwipe: " + swipeDir);
-        const roomName = clientRooms[client.id];
+
+        // if(!clientRooms) {
+        //     console.log("No client rooms");
+        // } else { console.log("Client rooms exist"); }
+
+        // const roomName = clientRooms[client.id];
         
-        if (!roomName) {
-            return;
-        }
+        // if (!roomName) {
+        //     return;
+        // }
 
-        const vel = getUpdatedVelocity(null, swipeDir);
+        // const vel = getUpdatedVelocity(null, swipeDir);
 
-        if (vel) {
-            state[roomName].players[client.number - 1].vel = vel;
-        }        
+        // if (vel) {
+        //     state[roomName].players[client.number - 1].vel = vel;
+        // }        
     }
 
 });
@@ -106,6 +112,8 @@ function startGameInterval(roomName) {
             emitGameState(roomName, state[roomName]);
         } else {
             emitGameOver(roomName, winner);
+            state[roomName] = null;
+            clearInterval(intervalId);
         }
     }, 1000 / FRAME_RATE);
 };

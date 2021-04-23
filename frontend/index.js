@@ -4,9 +4,9 @@ var SNAKE2_COLOUR = 'red';
 const FOOD_COLOUR = '#e66916';
 var PLAYER_NUMBER = 0;
 
-const socket = io('https://evening-escarpment-62492.herokuapp.com/');
+// const socket = io('https://evening-escarpment-62492.herokuapp.com/');
 
-// const socket = io('localhost:3000'); // internal testing
+const socket = io('localhost:3000'); // internal testing
 
 // socket.on("connect_error", (err) => {
 //     console.log(`connect_error due to ${err.message}`);
@@ -35,6 +35,7 @@ const controlsDisplay = document.getElementById('controlsDisplay');
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 window.addEventListener('touchstart', function() { controlsDisplay.textContent = "by swiping!"; });
+
 
 function newGame() {
     PLAYER_NUMBER = 1;
@@ -78,62 +79,10 @@ function keydown(e) {
 function swipeFunc(swipeDir) {
     socket.emit('swipe', swipeDir);
     console.log("swipeFunc: " + swipeDir);
-
-// TOUCH CONTROLS FROM STACK OVERFLOW TEST ---- https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
-//     document.addEventListener('touchstart', handleTouchStart, false);        
-//     document.addEventListener('touchmove', handleTouchMove, false);
-
-//     var xDown = null;                                                        
-//     var yDown = null;
-
-//     function getTouches(evt) {
-//     return evt.touches ||             // browser API
-//             evt.originalEvent.touches; // jQuery
-//     }                                                     
-
-//     function handleTouchStart(evt) {
-//         const firstTouch = getTouches(evt)[0];                                      
-//         xDown = firstTouch.clientX;                                      
-//         yDown = firstTouch.clientY;                                      
-//     };                                                
-
-//     function handleTouchMove(evt) {
-//         if ( ! xDown || ! yDown ) {
-//             return;
-//         }
-
-//         var xUp = evt.touches[0].clientX;                                    
-//         var yUp = evt.touches[0].clientY;
-
-//         var xDiff = xDown - xUp;
-//         var yDiff = yDown - yUp;
-
-//         if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-//             if ( xDiff > 0 ) {
-//                 /* left swipe */ 
-//                 socket.emit('swipe', "left");
-
-//             } else {
-//                 /* right swipe */
-//                 socket.emit('swipe', "right");
-//             }                       
-//         } else {
-//             if ( yDiff > 0 ) {
-//                 /* down swipe */ 
-//                 socket.emit('swipe', "up");
-//             } else { 
-//                 /* up swipe */
-//                 socket.emit('swipe', "down");
-//             }                                                                 
-//         }
-//         /* reset values */
-//         xDown = null;
-//         yDown = null;                                             
-// };
-
 }
 
 function paintGame (state) {
+    // window.addEventListener('touchstart', swipeFunc("up"));
     playerColourDisplay.style.backgroundColor = window["SNAKE" + PLAYER_NUMBER + "_COLOUR"];
 
     ctx.fillStyle = BG_COLOUR;
@@ -221,49 +170,49 @@ function reset() {
     gameScreen.style.display = "none";
 }
 
-// // TOUCH CONTROLS FROM STACK OVERFLOW TEST ---- https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
-// document.addEventListener('touchstart', handleTouchStart, false);        
-// document.addEventListener('touchmove', handleTouchMove, false);
-// var xDown = null;                                                        
-// var yDown = null;
-// function getTouches(evt) {
-//   return evt.touches ||             // browser API
-//          evt.originalEvent.touches; // jQuery
-// }                                                     
-// function handleTouchStart(evt) {
-//     const firstTouch = getTouches(evt)[0];                                      
-//     xDown = firstTouch.clientX;                                      
-//     yDown = firstTouch.clientY;                                      
-// };                                                
-// function handleTouchMove(evt) {
-//     if ( ! xDown || ! yDown ) {
-//         return;
-//     }
-//     var xUp = evt.touches[0].clientX;                                    
-//     var yUp = evt.touches[0].clientY;
+// TOUCH CONTROLS FROM STACK OVERFLOW TEST ---- https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
+document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchmove', handleTouchMove, false);
+var xDown = null;                                                        
+var yDown = null;
+function getTouches(evt) {
+  return evt.touches ||             // browser API
+         evt.originalEvent.touches; // jQuery
+}                                                     
+function handleTouchStart(evt) {
+    const firstTouch = getTouches(evt)[0];                                      
+    xDown = firstTouch.clientX;                                      
+    yDown = firstTouch.clientY;                                      
+};                                                
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
+    var xUp = evt.touches[0].clientX;                                    
+    var yUp = evt.touches[0].clientY;
 
-//     var xDiff = xDown - xUp;
-//     var yDiff = yDown - yUp;
-//     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-//         if ( xDiff > 0 ) {
-//             /* left swipe */ 
-//             console.log("handleTouchMove function: left swipe");
-//             swipeFunc("left");
-//         } else {
-//             /* right swipe */
-//             console.log("handleTouchMove function: right swipe");
-//             swipeFunc("right");
-//         }                       
-//     } else {
-//         if ( yDiff > 0 ) {
-//             /* down swipe */ 
-//             swipeFunc("down");
-//         } else { 
-//             /* up swipe */
-//             swipeFunc("up");
-//         }                                                                 
-//     }
-//     /* reset values */
-//     xDown = null;
-//     yDown = null;                                             
-// };
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+            /* left swipe */ 
+            // console.log("handleTouchMove function: left swipe");
+            swipeFunc("left");
+        } else {
+            /* right swipe */
+            // console.log("handleTouchMove function: right swipe");
+            swipeFunc("right");
+        }                       
+    } else {
+        if ( yDiff > 0 ) {
+            /* down swipe */ 
+            swipeFunc("up");
+        } else { 
+            /* up swipe */
+            swipeFunc("down");
+        }                                                                 
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;                                             
+};
