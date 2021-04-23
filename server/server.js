@@ -6,7 +6,7 @@ const io = require("socket.io")( {
 
 // const io = require("socket.io");
 
-const { gameLoop, getUpdatedVelocity, initGame } = require('./game');
+const { createGameState, gameLoop, getUpdatedVelocity, initGame } = require('./game');
 const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./utils');
 
@@ -82,6 +82,7 @@ io.on('connection', client => {
     }
 
     function handleSwipe(swipeDir) {
+        console.log("handleSwipe: " + swipeDir);
         const roomName = clientRooms[client.id];
         
         if (!roomName) {
@@ -120,3 +121,4 @@ function emitGameOver(roomName, winner) {
 }
 
 io.listen(process.env.PORT || 3000);
+// io.listen(3000);
