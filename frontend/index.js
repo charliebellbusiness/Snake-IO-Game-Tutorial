@@ -4,9 +4,9 @@ var SNAKE2_COLOUR = 'red';
 const FOOD_COLOUR = '#e66916';
 var PLAYER_NUMBER = 0;
 
-// const socket = io('https://evening-escarpment-62492.herokuapp.com/');
+const socket = io('https://evening-escarpment-62492.herokuapp.com/');
 
-const socket = io('localhost:3000'); // internal testing
+// const socket = io('localhost:3000'); // internal testing
 
 // socket.on("connect_error", (err) => {
 //     console.log(`connect_error due to ${err.message}`);
