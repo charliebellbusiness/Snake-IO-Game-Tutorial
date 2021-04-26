@@ -85,21 +85,21 @@ io.on('connection', client => {
     function handleSwipe(swipeDir) {
         console.log("handleSwipe: " + swipeDir);
 
-        // if(!clientRooms) {
-        //     console.log("No client rooms");
-        // } else { console.log("Client rooms exist"); }
+        if(!clientRooms) {
+            return;
+        }
 
-        // const roomName = clientRooms[client.id];
+        const roomName = clientRooms[client.id];
         
-        // if (!roomName) {
-        //     return;
-        // }
+        if (!roomName) {
+            return;
+        }
 
-        // const vel = getUpdatedVelocity(null, swipeDir);
+        const vel = getUpdatedVelocity(null, swipeDir);
 
-        // if (vel) {
-        //     state[roomName].players[client.number - 1].vel = vel;
-        // }        
+        if (vel && state[roomName].players) {
+            state[roomName].players[client.number - 1].vel = vel;
+        }        
     }
 
 });

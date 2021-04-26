@@ -69,6 +69,7 @@ function init() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     document.addEventListener('keydown', keydown);
+    initTouchControls();
     gameActive = true;
 }
 
@@ -76,9 +77,63 @@ function keydown(e) {
     socket.emit('keydown', e.keyCode);
 }
 
-function swipeFunc(swipeDir) {
-    // socket.emit('swipe', swipeDir);
-    console.log("swipeFunc: " + swipeDir);
+function initTouchControls() {
+
+    // TOUCH CONTROLS YEETED FROM STACK OVERFLOW ---- https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
+    document.addEventListener('touchstart', handleTouchStart, false);        
+    document.addEventListener('touchmove', handleTouchMove, false);
+    var xDown = null;                                                        
+    var yDown = null;
+
+    function getTouches(evt) {
+    return evt.touches ||             // browser API
+            evt.originalEvent.touches; // jQuery
+    }                                       
+
+    function handleTouchStart(evt) {
+        const firstTouch = getTouches(evt)[0];                                      
+        xDown = firstTouch.clientX;                                      
+        yDown = firstTouch.clientY;                                      
+    };                               
+
+    function handleTouchMove(evt) {
+        if ( ! xDown || ! yDown ) {
+            return;
+        }
+        var xUp = evt.touches[0].clientX;                                    
+        var yUp = evt.touches[0].clientY;
+
+        var xDiff = xDown - xUp;
+        var yDiff = yDown - yUp;
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+            if ( xDiff > 0 ) {
+                /* left swipe */ 
+                console.log("handleTouchMove function: left swipe");
+                // swipeFunc("left");
+                socket.emit('swipe', "left");
+            } else {
+                /* right swipe */
+                console.log("handleTouchMove function: right swipe");
+                // swipeFunc("right");
+                socket.emit('swipe', "right");
+            }                       
+        } else {
+            if ( yDiff > 0 ) {
+                /* down swipe */ 
+                // swipeFunc("up");
+                console.log("handleTouchMove function: up swipe");
+                socket.emit('swipe', "up");
+            } else { 
+                /* up swipe */
+                // swipeFunc("down");
+                console.log("handleTouchMove function: down swipe");
+                socket.emit('swipe', "down");
+            }                                                                 
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;                                             
+    };
 }
 
 function paintGame (state) {
@@ -170,55 +225,3 @@ function reset() {
     gameScreen.style.display = "none";
 }
 
-// TOUCH CONTROLS FROM STACK OVERFLOW TEST ---- https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
-document.addEventListener('touchstart', handleTouchStart, false);        
-document.addEventListener('touchmove', handleTouchMove, false);
-var xDown = null;                                                        
-var yDown = null;
-function getTouches(evt) {
-  return evt.touches ||             // browser API
-         evt.originalEvent.touches; // jQuery
-}                                                     
-function handleTouchStart(evt) {
-    const firstTouch = getTouches(evt)[0];                                      
-    xDown = firstTouch.clientX;                                      
-    yDown = firstTouch.clientY;                                      
-};                                                
-function handleTouchMove(evt) {
-    if ( ! xDown || ! yDown ) {
-        return;
-    }
-    var xUp = evt.touches[0].clientX;                                    
-    var yUp = evt.touches[0].clientY;
-
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 0 ) {
-            /* left swipe */ 
-            console.log("handleTouchMove function: left swipe");
-            // swipeFunc("left");
-            socket.emit('swipe', "left");
-        } else {
-            /* right swipe */
-            console.log("handleTouchMove function: right swipe");
-            // swipeFunc("right");
-            socket.emit('swipe', "right");
-        }                       
-    } else {
-        if ( yDiff > 0 ) {
-            /* down swipe */ 
-            // swipeFunc("up");
-            console.log("handleTouchMove function: up swipe");
-            socket.emit('swipe', "up");
-        } else { 
-            /* up swipe */
-            // swipeFunc("down");
-            console.log("handleTouchMove function: down swipe");
-            socket.emit('swipe', "down");
-        }                                                                 
-    }
-    /* reset values */
-    xDown = null;
-    yDown = null;                                             
-};

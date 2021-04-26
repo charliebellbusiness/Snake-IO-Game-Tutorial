@@ -185,20 +185,20 @@ function getUpdatedVelocity(keyCode, swipeDir) {
         switch (swipeDir) {
             // 37, 38, 39, 40 = Left, Down, Right, Up
             case "left": { // left
-                console.log("Velocity: left swipe");
+                // console.log("Velocity: left swipe");
             return {x: -1, y: 0}; 
             }
             case "down": { //down 
-                console.log("Velocity: down swipe");
-            return {x: 0, y: -1};
+                // console.log("Velocity: down swipe");
+            return {x: 0, y: 1};
             }
             case "right": { //right 
-                console.log("Velocity: right swipe");
+                // console.log("Velocity: right swipe");
                 return {x: 1, y: 0} ;
             }
             case "up": { //up
-                console.log("Velocity: right swipe");
-                return {x: 0, y: 1} ;
+                // console.log("Velocity: right swipe");
+                return {x: 0, y: -1} ;
             }
         }
     
