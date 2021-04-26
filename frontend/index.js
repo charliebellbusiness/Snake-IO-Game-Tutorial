@@ -77,7 +77,7 @@ function keydown(e) {
 }
 
 function swipeFunc(swipeDir) {
-    socket.emit('swipe', swipeDir);
+    // socket.emit('swipe', swipeDir);
     console.log("swipeFunc: " + swipeDir);
 }
 
@@ -196,20 +196,26 @@ function handleTouchMove(evt) {
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
         if ( xDiff > 0 ) {
             /* left swipe */ 
-            // console.log("handleTouchMove function: left swipe");
-            swipeFunc("left");
+            console.log("handleTouchMove function: left swipe");
+            // swipeFunc("left");
+            socket.emit('swipe', "left");
         } else {
             /* right swipe */
-            // console.log("handleTouchMove function: right swipe");
-            swipeFunc("right");
+            console.log("handleTouchMove function: right swipe");
+            // swipeFunc("right");
+            socket.emit('swipe', "right");
         }                       
     } else {
         if ( yDiff > 0 ) {
             /* down swipe */ 
-            swipeFunc("up");
+            // swipeFunc("up");
+            console.log("handleTouchMove function: up swipe");
+            socket.emit('swipe', "up");
         } else { 
             /* up swipe */
-            swipeFunc("down");
+            // swipeFunc("down");
+            console.log("handleTouchMove function: down swipe");
+            socket.emit('swipe', "down");
         }                                                                 
     }
     /* reset values */
