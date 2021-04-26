@@ -31,6 +31,7 @@ function createGameState() {
                 {x: 2, y: 10},
                 {x: 3, y: 10}
             ],
+            colour: ''
         }, 
         // Player 2
         {
@@ -46,8 +47,12 @@ function createGameState() {
                 {x: 20, y: 10},
                 {x: 19, y: 10},
                 {x: 18, y: 10}
-            ],}
+            ],
+        }
+
         ],
+
+        // Game settings
         food: {
         },
         gridsize: GRID_SIZE,
@@ -154,7 +159,10 @@ function randomFood(state) {
     state.food = food;
 }
 
-function getUpdatedVelocity(keyCode) {
+function getUpdatedVelocity(keyCode, swipeDir) {
+
+    // If player is using keyboard
+    if (!swipeDir) {
     switch (keyCode) {
         // 37, 38, 39, 40 = Left, Down, Right, Up
         case 37: { // left
@@ -170,4 +178,31 @@ function getUpdatedVelocity(keyCode) {
             return {x: 0, y: 1} ;
         }
     }
+}
+
+    // If player is using touch controls
+    if (!keyCode) {
+        switch (swipeDir) {
+            // 37, 38, 39, 40 = Left, Down, Right, Up
+            case "left": { // left
+                // console.log("Velocity: left swipe");
+            return {x: -1, y: 0}; 
+            }
+            case "down": { //down 
+                // console.log("Velocity: down swipe");
+            return {x: 0, y: 1};
+            }
+            case "right": { //right 
+                // console.log("Velocity: right swipe");
+                return {x: 1, y: 0} ;
+            }
+            case "up": { //up
+                // console.log("Velocity: right swipe");
+                return {x: 0, y: -1} ;
+            }
+        }
+    
+
+
+}
 }
