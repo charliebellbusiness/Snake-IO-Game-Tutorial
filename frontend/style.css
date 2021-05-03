@@ -1,0 +1,49 @@
+body {
+    margin: 0; 
+    height: 100%; 
+    overflow: hidden;
+}
+
+#foregroundContainer {
+    background-color:white;
+    padding:0%;
+}
+
+#initialScreen {
+    position: relative;
+}
+
+#mainMenu {
+    text-align: center;
+    position: absolute;
+}
+
+#devNotes {
+    position: absolute;
+    top: 65%;
+    text-align: left;
+}
+
+#devNotesHeader {
+    font-size: 1.15em;
+}
+
+#gameScreen {
+    display: none;
+    text-align:center;
+    justify-content:center;
+}
+
+#playerColourHeader {
+    height:1em;
+    width:1em;
+    display:inline-block;
+    vertical-align:bottom;
+}
+
+#playerColourDesign {
+    height:1em;
+    width:1em;
+    display:inline-block;
+    vertical-align:bottom;
+}

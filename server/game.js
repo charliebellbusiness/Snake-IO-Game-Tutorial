@@ -1,5 +1,6 @@
 const { GRID_SIZE } = require('./constants');
 
+// Export functions from this file to be used in another
 module.exports = {
     initGame,
     gameLoop,
@@ -13,6 +14,8 @@ function initGame() {
     return state;
 }
 
+// Define game properties such as array of player objects, game settings, etc
+// PLAYER VALUES AND PLAYER AMOUNT ARE CURRENTLY HARDCODED! 
 function createGameState() {
     return {
         players: [
@@ -30,7 +33,7 @@ function createGameState() {
                 {x: 1, y: 10},
                 {x: 2, y: 10},
                 {x: 3, y: 10}
-            ],
+            ], // Each snake part requires another set of coordinates
             colour: ''
         }, 
         // Player 2
@@ -62,19 +65,21 @@ function createGameState() {
 
 function gameLoop(state) {
    if (!state) {
-       console.log("state does not exist??");
+       console.log("State does not exist.");
        return;
    }
    
    const playerOne = state.players[0];
    const playerTwo = state.players[1];
 
+   // Add player's velocity to player's position
    playerOne.pos.x += playerOne.vel.x;
    playerOne.pos.y += playerOne.vel.y;
 
    playerTwo.pos.x += playerTwo.vel.x;
    playerTwo.pos.y += playerTwo.vel.y;
 
+   // Check Game Over conditions for each player, then return number of other player
    if (playerOne.pos.x < 0 || playerOne.pos.x > GRID_SIZE || playerOne.pos.y < 0 || playerOne.pos.y > GRID_SIZE) {
        return 2; // Return winner, player 2 wins if player 1 leaves game arena
    }
@@ -83,6 +88,7 @@ function gameLoop(state) {
     return 1; // Return winner, player 1 wins if player 2 leaves game arena
     }
 
+    // Check player collision with food object for each player
    if (state.food.x === playerOne.pos.x && state.food.y === playerOne.pos.y) {
        
        // See if player is touching a food object, if so increase snake length by one
@@ -144,6 +150,7 @@ function randomFood(state) {
         y: Math.floor(Math.random() * GRID_SIZE),
     }
 
+    // Generate food only if randomized position does not collide with any part of players, else randomize again
     for (let cell of state.players[0].snake) {
         if (cell.x === food.x && cell.y === food.y) {
             return randomFood(state);

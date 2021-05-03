@@ -1,3 +1,5 @@
+// SERVER VALUES
+
 const io = require("socket.io")( {
     cors: {
       origin: "*",
@@ -11,15 +13,19 @@ const { makeid } = require('./utils');
 const state = {};
 const clientRooms = {};
 
+// CLIENT CONNECTION
 io.on('connection', client => {
 
-     // CLIENT.ON CALLS REQUIRE NAMED FUNCTION CALL, INLINE FUNCTIONS BREAK SERVER.JS CODE FOR SOME REASON
+    // CLIENT.ON CALLS
 
-    client.on('keydown', handleKeydown);
-    client.on('swipe', handleSwipe);
-    client.on('newGame', handleNewGame);
-    client.on('joinGame', handleJoinGame);
+    // Client.on calls require named function call, inline functions break server.js, not sure why
+    client.on('keydown', handleKeydown); // Client has pressed a key, determine what key
+    client.on('swipe', handleSwipe); // Client has swiped, determine what direction
+    client.on('newGame', handleNewGame); // Client starts game, generate GameCode and initialize game
+    client.on('joinGame', handleJoinGame); // Client joins game, verify GameCode and start game
 
+    // FUNCTIONS
+    
     function handleJoinGame(gameCode) {
         const room = io.sockets.adapter.rooms[gameCode];
 
@@ -129,4 +135,3 @@ function emitGameOver(roomName, winner) {
 }
 
 io.listen(process.env.PORT || 3000);
-// io.listen(3000);
