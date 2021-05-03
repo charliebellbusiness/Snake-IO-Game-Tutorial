@@ -1,25 +1,32 @@
+// WINDOW VALUES
+
 const BG_COLOUR = '#231f20';
 var SNAKE1_COLOUR = '#c2c2c2';
-var SNAKE2_COLOUR = 'red';
+var SNAKE2_COLOUR = '#bf4043';
 const FOOD_COLOUR = '#e66916';
 var PLAYER_NUMBER = 0;
 
+let canvas, ctx;
+let playerNumber;
+let gameActive = false;
+
+// PUBLIC SVR
 // const socket = io('https://evening-escarpment-62492.herokuapp.com/');
 
-const socket = io('localhost:3000'); // internal testing
+// LOCAL SVR
+const socket = io('localhost:3000');
 
-// socket.on("connect_error", (err) => {
-//     console.log(`connect_error due to ${err.message}`);
-//     socket.io.reconnect();
-//     console.log("attempting to reconnect...");
-//   });
+// SOCKET.ON 
 
-socket.on('init', handleInit);
-socket.on('gameState', handleGameState);
-socket.on('gameOver', handleGameOver);
-socket.on('gameCode', handleGameCode);
-socket.on('unknownGame', handleUnknownGame);
-socket.on('tooManyPlayers', handleTooManyPlayers);
+// When receive msg from server, call function
+socket.on('init', handleInit); // User clicks join game button, server confirms game is valid, server sends message
+socket.on('gameState', handleGameState); // Server checks every frame for gamestate after game start
+socket.on('gameOver', handleGameOver); // Server detects game end in gamestate
+socket.on('gameCode', handleGameCode); // Server issues gameCode to user after starting game
+socket.on('unknownGame', handleUnknownGame); // Server receives invalid GameCode
+socket.on('tooManyPlayers', handleTooManyPlayers); // Server detects the game at entered JoinCode is full
+
+// DOCUMENT ELEMENTS
 
 const gameScreen = document.getElementById('gameScreen');
 const initialScreen = document.getElementById('initialScreen');
@@ -32,11 +39,13 @@ const playerColourHeader = document.getElementById('playerColourHeader');
 const playerColourDisplay = document.getElementById('playerColourDisplay');
 const controlsDisplay = document.getElementById('controlsDisplay');
 
+// EVENT LISTENERS
+
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 window.addEventListener('touchstart', function() { controlsDisplay.textContent = "by swiping!"; });
 
-
+// FUNCTION DEFINITIONS
 function newGame() {
     PLAYER_NUMBER = 1;
     socket.emit('newGame');
@@ -49,10 +58,6 @@ function joinGame() {
     socket.emit('joinGame', code);
     init();
 }
-
-let canvas, ctx;
-let playerNumber;
-let gameActive = false;
 
 function init() {
     initialScreen.style.display = "none";
@@ -77,6 +82,10 @@ function keydown(e) {
     socket.emit('keydown', e.keyCode);
 }
 
+// Touch Controls are defined in this function just for neatness.
+/* Controls need to be less strict in determining swipe direction. Horizontal swipes can easily register as vertical swipes. 
+POSSIBLE FIX: Adjust for how much x diff > y diff, currently implemented as boolean x > y 
+*/ 
 function initTouchControls() {
 
     // TOUCH CONTROLS YEETED FROM STACK OVERFLOW ---- https://stackoverflow.com/questions/2264072/detect-a-finger-swipe-through-javascript-on-the-iphone-and-android
@@ -109,23 +118,23 @@ function initTouchControls() {
             if ( xDiff > 0 ) {
                 /* left swipe */ 
                 console.log("handleTouchMove function: left swipe");
-                // swipeFunc("left");
+
                 socket.emit('swipe', "left");
             } else {
                 /* right swipe */
                 console.log("handleTouchMove function: right swipe");
-                // swipeFunc("right");
+
                 socket.emit('swipe', "right");
             }                       
         } else {
             if ( yDiff > 0 ) {
                 /* down swipe */ 
-                // swipeFunc("up");
+
                 console.log("handleTouchMove function: up swipe");
                 socket.emit('swipe', "up");
             } else { 
                 /* up swipe */
-                // swipeFunc("down");
+
                 console.log("handleTouchMove function: down swipe");
                 socket.emit('swipe', "down");
             }                                                                 

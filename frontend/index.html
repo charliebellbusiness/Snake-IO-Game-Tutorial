@@ -4,51 +4,73 @@
     <meta charset="UTF-8">
     <title>MultiPlayer Snake</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossorigin="anonymous">
-    <style>
-        #gameScreen {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <section class="vh-100">
-        <div class="container h-100">
+        <div class="container h-100" id="foregroundContainer">
+
+          <!--                  INITIAL SCREEN                 -->
             <div id="initialScreen" class="h-100">
 
-                <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                    <h1>Multiplayer Snake Game</h1>
-                    <button
-                      type="submit"
-                      class="btn btn-success"
-                      id="newGameButton"
-                    >
-                      Create New Game
-                    </button>
-                    <div>OR</div>
-                    <div class="form-group">
-                      <input type="text" placeholder="Enter Game Code" id="gameCodeInput"/>
-                    </div>
-                    <button
-                      type="submit"
-                      class="btn btn-success"
-                      id="joinGameButton"
-                    >
-                      Join Game
-                    </button>
+                <div class="d-flex flex-column align-items-center justify-content-center vh-100">
 
-                    <p></p>
-                    <p></p>
+                  <!--                  MAIN MENU                 -->
 
-                    <div class="d-flex flex-column align-items-center justify-content-bottom">
-                      <p>Made using tutorials by Hungry Turtle Coding on Youtube</p>
+                  <div id="mainMenu">
+                      <h1>Multiplayer Snake Game</h1>
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="newGameButton"
+                      >
+                        Create New Game
+                      </button>
+                      <br><br>
+                      <div class="form-group">
+                        <input type="text" placeholder="Enter Game Code" id="gameCodeInput"/>
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="joinGameButton"
+                      >
+                        Join Game
+                      </button>
+
+                  </div>
+
+                  <br>
+
+                  <!--                  DEV NOTES                 -->
+
+                    <div id="devNotes">
+                      <b id="devNotesHeader">Developer Notes:</b>
+                      <p>
+                        <b>Last updated 04/25/2021 @ 09:46 PM CST</b>
+                        <p style="margin:0">Currently working on: </p>
+                          <ul style="text-align: left">
+                            <li>improving mobile-friendliness</li>
+                            <li>smoothing out touch controls</li> 
+                            <li>making clearer what way your snake is looking</li>
+                            <li>custom game settings</li>
+                          </ul>
+                          <a href="https://github.com/charliebellbusiness" target="_blank" class="btn btn-primary">Check my Github for updates!</a>
+                      </p>
                     </div>
+
                 </div>
-              </div>
-              
+                
+            </div>
+
+          <!--                  GAME SCREEN                 -->
+
             <div id="gameScreen" class="h-100">
                 <div class="d-flex flex-column align-items-center justify-content-center h-100">
                     <h1 id="gameCodeHeader"> Your game code is: <span id="gameCodeDisplay"></span> </h1>
-                    <h1 id="playerColourHeader"> Your snake colour is: <div id="playerColourDisplay" style="height:1em;width:1em;display:inline-block;vertical-align:bottom;"></div></h1>
+                    <h1 id="playerColourHeader"> Your snake colour is: <div id="playerColourDisplay"></div></h1>
                     <p></p>
                     <canvas id="canvas"></canvas>
                     <p></p>
