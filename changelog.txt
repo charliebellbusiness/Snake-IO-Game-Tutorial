@@ -1,0 +1,52 @@
+//////////////////////////////////////////////////////////////////////////
+
+Changelog v05.02.2021.A, The ReFactoring
+
+INDEX.HTML
+--------------------
+All CSS, other than In-line for objects with no ID or bootstrap class names, moved from index.html to style.css as to better organize styling
+
+Added ID foregroundContainer to bootstrap container div
+
+Added header comments to initial and game screen sections
+
+STYLE.CSS
+-------------------
+Centered #mainMenu, previously all initial screen elements were centered together. #devNotes now falls 15% below #mainMenu
+
+
+CLIENT.JS
+--------------------
+Added header comments for grouped variables, functions, etc
+
+Added basic explanations to Socket.on calls
+
+Dimmed player 2's hardcoded colour to be less vibrant
+
+SERVER.JS
+--------------------
+Added header comments for grouped variables, functions, etc
+
+Added basic explanations to Client.on calls
+
+GAME.JS
+--------------------
+Added header comments for grouped variables, functions, etc
+
+Added basic explanations to more complicated functions
+
+//////////////////////////////////////////////////////////////////////////
+
+Changelog v05.08.2021.A, (Low) Quality of Life
+
+INDEX.HTML
+--------------------
+Added meta viewport tag to force bootstrap objects to scale for mobile
+
+STYLE.CSS
+--------------------
+Added media query for phone screens to adjust game screen instructions
+
+INDEX.JS
+--------------------
+Adjusted canvas size based on screen size
