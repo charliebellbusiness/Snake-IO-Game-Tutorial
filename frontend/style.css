@@ -15,12 +15,9 @@ body {
 
 #mainMenu {
     text-align: center;
-    position: absolute;
 }
 
 #devNotes {
-    position: absolute;
-    top: 65%;
     text-align: left;
 }
 
@@ -46,4 +43,15 @@ body {
     width:1em;
     display:inline-block;
     vertical-align:bottom;
+}
+
+/* For Phones */
+@media screen and (max-width: 540px) {
+    #initialScreen h1 {
+        font-size: 30px;
+    }
+
+    #gameScreen h1 {
+        font-size: 25px;
+    }
 }
