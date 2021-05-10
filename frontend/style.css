@@ -33,12 +33,11 @@ body {
 
 #playerColourHeader {
     height:1em;
-    width:1em;
     display:inline-block;
     vertical-align:bottom;
 }
 
-#playerColourDesign {
+#playerColourDisplay {
     height:1em;
     width:1em;
     display:inline-block;

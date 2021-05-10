@@ -34,7 +34,8 @@ function createGameState() {
                 {x: 2, y: 10},
                 {x: 3, y: 10}
             ], // Each snake part requires another set of coordinates
-            colour: ''
+            colour: '',
+            facing: 'right'
         }, 
         // Player 2
         {
@@ -51,6 +52,7 @@ function createGameState() {
                 {x: 19, y: 10},
                 {x: 18, y: 10}
             ],
+            facing: 'left'
         }
 
         ],
@@ -71,7 +73,7 @@ function gameLoop(state) {
    
    const playerOne = state.players[0];
    const playerTwo = state.players[1];
-
+   
    // Add player's velocity to player's position
    playerOne.pos.x += playerOne.vel.x;
    playerOne.pos.y += playerOne.vel.y;
@@ -90,11 +92,10 @@ function gameLoop(state) {
 
     // Check player collision with food object for each player
    if (state.food.x === playerOne.pos.x && state.food.y === playerOne.pos.y) {
-       
        // See if player is touching a food object, if so increase snake length by one
        playerOne.snake.push({ ...playerOne.pos })
        playerOne.pos.x += playerOne.vel.x;
-       playerOne.pos.y += playerOne.vel.y; 
+       playerOne.pos.y += playerOne.vel.y;
     
        // Place a new food object in a random space
        randomFood(state);
@@ -182,7 +183,7 @@ function getUpdatedVelocity(keyCode, swipeDir) {
             return {x: 1, y: 0} ;
         }
         case 40: { //up
-            return {x: 0, y: 1} ;
+            return {x: 0, y: 1};
         }
     }
 }

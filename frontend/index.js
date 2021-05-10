@@ -1,8 +1,8 @@
 // WINDOW VALUES
 
 const BG_COLOUR = '#231f20';
-var SNAKE1_COLOUR = '#c2c2c2';
-var SNAKE2_COLOUR = '#bf4043';
+var SNAKE1_COLOUR = '#b4da55';
+var SNAKE2_COLOUR = '#f42069';
 const FOOD_COLOUR = '#e66916';
 var PLAYER_NUMBER = 0;
 
@@ -38,6 +38,7 @@ const gameCodeHeader = document.getElementById('gameCodeHeader');
 const playerColourHeader = document.getElementById('playerColourHeader');
 const playerColourDisplay = document.getElementById('playerColourDisplay');
 const controlsDisplay = document.getElementById('controlsDisplay');
+const snakeSheet = document.getElementById('snakeSheet');
 
 // EVENT LISTENERS
 
@@ -46,6 +47,7 @@ joinGameBtn.addEventListener('click', joinGame);
 window.addEventListener('touchstart', function() { controlsDisplay.textContent = "by swiping!"; });
 
 // FUNCTION DEFINITIONS
+
 function newGame() {
     PLAYER_NUMBER = 1;
     socket.emit('newGame');
@@ -172,14 +174,55 @@ function paintPlayer(playerState, size, colour){
     playerColourHeader.style.display = "block";
 
     const snake = playerState.snake;
+    const snakeHead = snake[snake.length - 1];
+
+    // Coordinates of body sprite on the snakeSheet
+    // const snakeBody = {x:1, y:50};
+
+    // Coordinates of each face on the snakeSheet, currently hardcoded.
+    const snakeFaces = {
+        up: {x:32,y:50},
+        down: {x:94,y:50},
+        left: {x:32,y:81},
+        right: {x:63,y:50}
+    }
 
     ctx.fillStyle = colour;
-    
-    // Paint player on grid
+
+    // Paint player body on grid
     for(let cell of snake) {
-        // Convert gamespace pos of player to canvas pos of player
+
+        // Use spritesheet for body
+        // ctx.drawImage(snakeSheet, 1, 50, 30, 30, cell.x * size, cell.y * size, size, size); 
+
+        // Use canvas rectangles for body
         ctx.fillRect(cell.x * size, cell.y * size, size, size);
     }
+    
+    // I know this block is ugly, but it looks better than nested switch statements.
+    // Determine what direction the player is facing based off of current velocity, then draw corresponding snakeHead from sprite sheet.
+    if(playerState.vel.x == 0 && playerState.vel.y == 1) { // UP
+        ctx.drawImage(snakeSheet, snakeFaces.down.x, snakeFaces.down.y, 30, 30, snakeHead.x * size, snakeHead.y * size, size, size);
+    } 
+    else if (playerState.vel.x == 0 && playerState.vel.y == -1) { // DOWN
+        ctx.drawImage(snakeSheet, snakeFaces.up.x, snakeFaces.up.y, 30, 30, snakeHead.x * size, snakeHead.y * size, size, size);
+    }
+    else if (playerState.vel.x == -1 && playerState.vel.y == 0) { // LEFT
+        ctx.drawImage(snakeSheet, snakeFaces.left.x, snakeFaces.left.y, 30, 30, snakeHead.x * size, snakeHead.y * size, size, size);
+    }
+    else if (playerState.vel.x == 1 && playerState.vel.y == 0) { // RIGHT
+        ctx.drawImage(snakeSheet, snakeFaces.right.x, snakeFaces.right.y, 30, 30, snakeHead.x * size, snakeHead.y * size, size, size);
+    }
+    else {
+        console.log('No player velocity detected');
+        var key = playerState.facing;
+        // console.log(snakeFaces[key].x);
+        // console.log(snakeFaces[key].y);
+
+        // Use starting direction of player to paint face
+        ctx.drawImage(snakeSheet, snakeFaces[key].x, snakeFaces[key].y, 30, 30, snakeHead.x * size, snakeHead.y * size, size, size);
+    }
+
 }
 
 function handleInit(number) {

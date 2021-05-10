@@ -37,16 +37,32 @@ Added basic explanations to more complicated functions
 
 //////////////////////////////////////////////////////////////////////////
 
-Changelog v05.08.2021.A, (Low) Quality of Life
+Changelog v05.08.2021.A, Mobile Friendliness and Quality of Life
 
 INDEX.HTML
 --------------------
 Added meta viewport tag to force bootstrap objects to scale for mobile
+Added hidden snakeSheet.png object for snake spritesheet
 
 STYLE.CSS
 --------------------
 Added media query for phone screens to adjust game screen instructions
 
+
 INDEX.JS
 --------------------
-Adjusted canvas size based on screen size
+Adjusted canvas size based on screen size (300px for phones, 600px for all others)
+Adjusted hardcoded snake values to be #b4da55 / #f42069
+Added support for player faces to be painted from snake spritesheet
+ - Face style is hardcoded to one default
+ - Face "rotations" are currently separate sprites selected based on player direction
+
+GAME.JS
+--------------------
+Added "facing" property to player objects
+ - Currently hardcoded for each player
+
+SNAKESHEET.PNG
+--------------------
+Added spritesheet for snake faces
+ - Currently one face with rotated sprites
