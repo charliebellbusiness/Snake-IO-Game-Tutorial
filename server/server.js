@@ -89,7 +89,6 @@ io.on('connection', client => {
     }
 
     function handleSwipe(swipeDir) {
-        console.log("handleSwipe: " + swipeDir);
 
         if(!clientRooms) {
             return;
@@ -120,6 +119,7 @@ function startGameInterval(roomName) {
             emitGameOver(roomName, winner);
             state[roomName] = null;
             clearInterval(intervalId);
+            console.log("Closed room " + intervalId);
         }
     }, 1000 / FRAME_RATE);
 };
