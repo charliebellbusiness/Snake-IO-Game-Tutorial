@@ -214,7 +214,6 @@ function paintPlayer(playerState, size, colour){
         ctx.drawImage(snakeSheet, snakeFaces.right.x, snakeFaces.right.y, 30, 30, snakeHead.x * size, snakeHead.y * size, size, size);
     }
     else {
-        console.log('No player velocity detected');
         var key = playerState.facing;
         // console.log(snakeFaces[key].x);
         // console.log(snakeFaces[key].y);
@@ -278,4 +277,3 @@ function reset() {
     initialScreen.style.display = "block";
     gameScreen.style.display = "none";
 }
-
