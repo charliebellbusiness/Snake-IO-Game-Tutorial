@@ -65,6 +65,14 @@ function createGameState() {
     }
 }
 
+// TODO: Refactor gameLoop for scaling player counts
+// Rather than create constants for each player, structure code similar to below block
+// var playersArray = state.players;
+// for (player in playersArray) {
+//      player.pos.x += player.vel.x;
+//      player.pox.y += player.vel.y
+// }
+
 function gameLoop(state) {
    if (!state) {
        console.log("State does not exist.");
@@ -122,6 +130,16 @@ function gameLoop(state) {
            }
        }
 
+       //increment to see if snake has bumped other snake
+       for(let cell of playerOne.snake) {
+
+        if (playerTwo.snake.some(e => e.x === cell.x) && playerTwo.snake.some(e => e.y === cell.y)) {
+            console.log("Player 1 is kill");
+            return 2; // Player 2 has destroyed player 1
+        }
+
+    }
+
        // Move player one snake on grid if velocity exists
        playerOne.snake.push({ ...playerOne.pos });
        playerOne.snake.shift();
@@ -135,6 +153,16 @@ function gameLoop(state) {
         if(cell.x === playerTwo.pos.x && cell.y === playerTwo.pos.y) {
          return 1; //Player 2 has lost
         }
+    }
+
+    //increment to see if snake has bumped other snake
+    for(let cell of playerTwo.snake) {
+
+        if (playerOne.snake.some(e => e.x === cell.x) && playerOne.snake.some(e => e.y === cell.y)) {
+            console.log("Player 2 is kill");
+            return 1; // Player 1 has destroyed player 2
+        }
+
     }
 
     // Move player two snake on grid if velocity exists

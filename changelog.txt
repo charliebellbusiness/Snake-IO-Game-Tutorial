@@ -61,6 +61,8 @@ GAME.JS
 --------------------
 Added "facing" property to player objects
  - Currently hardcoded for each player
+Added hardcoded collision detection between players
+Added notes for refactoring gameLoop to support scaling lobbies and implement less redundant blocks
 
 SNAKESHEET.PNG
 --------------------
